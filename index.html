@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <h1>Добро пожаловать!</h1>
+    <form id="bot-form">
+        <label for="message">Введите сообщение для бота:</label>
+    <input type="text" id="message" name="message" required>
+    <button type="submit">Отправить</button>
+</form>
+<div id="response"></div>
+
+<script>
+    document.getElementById('bot-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = document.getElementById('message').value;
+
+        const response = await fetch('/sendMessage', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message }),
+        });
+
+        const result = await response.json();
+        document.getElementById('response').innerText = result.reply;
+    });
+</script>
+</body>
+</html>
